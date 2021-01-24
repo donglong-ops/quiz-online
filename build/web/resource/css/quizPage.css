@@ -1,0 +1,29 @@
+#quizContainer {
+    padding-right: 150px;
+}
+
+.hidden {
+    display: none;
+    visibility: hidden;
+}
+
+#TimeSpan {
+    display: block;
+    width: 100%;
+    text-align: right;
+}
+
+#next {
+    float: right;
+}
+#quizForm > p{
+
+}
+#quizForm > li{
+    float: left;
+}
+.formQuiz{
+    width: 400px;
+    background-color: aliceblue;
+    margin-left: 25%
+}

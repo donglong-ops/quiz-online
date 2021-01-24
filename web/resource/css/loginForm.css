@@ -1,0 +1,14 @@
+table {
+    width: auto;
+}
+#test {
+    margin-bottom: 10px;
+    width: auto;
+    max-width: 200px;
+}
+.loginFornTitle{
+    margin-left: 10%;
+}
+#main-content{
+    margin-left: 20%;
+}

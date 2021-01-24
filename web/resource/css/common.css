@@ -1,0 +1,69 @@
+.success {
+    color: blue;
+}
+
+.failed {
+    color: red;
+}
+
+.userName {
+    color: blue;
+}
+
+#loginFornTitle {
+    color: #100078;
+    font-weight: bold;
+}
+
+.fieldLabel {
+    color: #2A577E;
+}
+
+a {
+    text-decoration: none;
+    cursor: default;
+    color: #2A577E;
+}
+
+#timeDisplay {
+    color: red;
+}
+
+.tableHeading {
+    color: #97D2FF;
+}
+
+.bold {
+    font-weight: bold;
+}
+
+.labelCol {
+    width: 60%;
+}
+.labelCol1 {
+    width: 5%;
+}
+
+.fieldCol {
+    width: 20%;
+}
+
+.fieldAction {
+    width: 25%;
+}
+
+table {
+    width: 100%;
+}
+
+ul {
+    list-style-type: none;
+}
+
+li {
+    display: inline-block;
+}
+table, th, td {border: 1px dashed #000}
+.form-action{
+    margin-left: 10%;
+}
