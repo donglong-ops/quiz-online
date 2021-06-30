@@ -11,13 +11,13 @@ import java.sql.Date;
 import java.text.DecimalFormat;
 import java.text.NumberFormat;
 import java.time.LocalDate;
+import java.util.List;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
-import vanlt.daos.QuestionDAO;
 import vanlt.daos.QuizHistoryDAO;
 import vanlt.dtos.QuestionDto;
 import vanlt.dtos.UserDto;
@@ -28,7 +28,6 @@ import vanlt.dtos.UserDto;
  */
 @WebServlet(name = "ResultQuizServlet", urlPatterns = {"/ResultQuizServlet"})
 public class ResultQuizServlet extends HttpServlet {
-
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -43,50 +42,29 @@ public class ResultQuizServlet extends HttpServlet {
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
         PrintWriter out = response.getWriter();
-        
-        QuestionDAO dao = new QuestionDAO();
+
+        QuizHistoryDAO history = new QuizHistoryDAO();
         HttpSession session = request.getSession();
         UserDto dto = (UserDto) session.getAttribute("USER");
+        int subjectID =  (int)session.getAttribute("subjectID");
         LocalDate date = java.time.LocalDate.now();
         Date dateQuiz = Date.valueOf(date);
-
+        List<QuestionDto> listQ = (List<QuestionDto>) session.getAttribute("quizData");
         try {
-            int numOfQuiz = Integer.parseInt(request.getParameter("numOfQuiz"));
-            System.out.println(numOfQuiz);
-            double mark = 0;
-            for (int i = 0; i < numOfQuiz; i++) {
-                int id = Integer.parseInt(request.getParameter("q" + String.valueOf(i)));
-                QuestionDto question = dao.findQuestionById(id);
-
-                String answer = "";
-                for (int j = 0; j < 4; j++) {
-                    String answerId = "ans" + String.valueOf(i) + "-" + String.valueOf(j);
-                    if (request.getParameter(answerId) != null) {
-                        answer += String.valueOf(j + 1);
-                    }
-                }
-                System.out.println("answer: " + answer);
-                if (question.getAnswer().equals(answer)) {
-                    mark++;
+            double correctAns = 0;
+            for (int i = 0; i < listQ.size(); i++) {
+               if (listQ.get(i).getAnswer().equals(request.getParameter("ans" + String.valueOf(i)))) {
+                    correctAns += 1;                   
                 }
             }
-
-            QuizHistoryDAO qhm = new QuizHistoryDAO();
-            qhm.addEntry(dto.getId(), numOfQuiz, (int) mark, dateQuiz);
-
+            double mark = (correctAns / listQ.size()) *10;
             NumberFormat formatter = new DecimalFormat("#0.00");
-            mark = (mark / (double) numOfQuiz) * 10;
-            double percent = mark * 10;
-            String status = "Failed";
-            if (mark > 4) {
-                status = "Passed";
+            if(dto.getUserName() != null){
+                history.addEntry(dto.getId(), listQ.size(), (int)correctAns, dateQuiz, subjectID);
             }
-            String className = (status.equals("Passed")) ? "success" : "failed";
-            request.setAttribute("numOfQuiz", numOfQuiz);
             request.setAttribute("result", formatter.format(mark));
-            request.setAttribute("percent", formatter.format(percent));
-            request.setAttribute("status", status);
-            request.setAttribute("className", className);
+            request.setAttribute("correctAnswer", (int)correctAns);
+            request.setAttribute("numOfQuiz", listQ.size());
 
         } catch (Exception ex) {
             ex.printStackTrace();

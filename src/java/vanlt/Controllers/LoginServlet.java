@@ -44,10 +44,10 @@ public class LoginServlet extends HttpServlet {
         String email = request.getParameter("username");
         String password = request.getParameter("password");
         try {
-            //String encryPassword = org.apache.commons.codec.digest.DigestUtils.sha256Hex(password);
+            String encryPassword = org.apache.commons.codec.digest.DigestUtils.sha256Hex(password);
             if (email.trim().length() > 0 && password.trim().length() > 0) {
                 UserDAO dao = new UserDAO();
-                UserDto result = dao.checkLogin(email, password);
+                UserDto result = dao.checkLogin(email, encryPassword);
                 if (result != null) {
                     HttpSession session = request.getSession();
                     session.setAttribute("USER", result);

@@ -4,12 +4,13 @@
     Author     : AVITA
 --%>
 
+<%@page import="java.util.ArrayList"%>
 <%@page import="vanlt.dtos.QuestionDto"%>
 <%@page import="java.util.List"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%
-    List<QuestionDto> questions = (List<QuestionDto>) request.getAttribute("quizData");
+    List<QuestionDto> questions = (List<QuestionDto>) session.getAttribute("quizData");
 %>
 <!DOCTYPE html>
 <html>
@@ -24,10 +25,9 @@
         <title>JSP Page</title>
     </head>
     <body>
-        <c:set var="listQuestion" value="${requestScope.quizData}"/>
+        <c:set var="listQuestion" value="${sessionScope.quizData}"/>
         <div id="main-panel">
             <jsp:include page="navbar.jsp" />   
-
             <div class="container">
                 <c:if test="${not empty listQuestion}">
                     <h3>Welcome <span class="userName">${sessionScope.USER.userName}</span></h3>
@@ -37,6 +37,8 @@
                     <hr class="col-8">
                     <input type="hidden" name="numOfQuiz" value="${listQuestion.size()}">
                     <form id="quizForm" action="finishQuiz" method="post">  
+                        <input type="hidden" name="numOfQuiz" value="${listQuestion.size()}">
+                       
                         <div class="row justify-content-center">
                             <h5 class="col-8 text-start" id="qustionPos">Question: 0/0</h5>
                         </div>
@@ -48,40 +50,35 @@
                             <div class="row justify-content-center">
                                 <p class="col-8 text-start"><%=q.getContent()%></p>
                                 <div class="col-8">
-                                    <input type="hidden" name="q<%=i%>" value="<%=q.getId()%>"/>
                                     <ul style="text-align: left">
-                                        <%
-                                            for (int j = 0; j < q.getOption().size(); j++) {
-                                                String ans = q.getOption().get(j);
-                                        %>
                                         <div class="form-check">
-                                            <input class="form-check-input" type="radio" name="ans" value="<%= j + 1%>" id="flexCheckDefault">
-                                            <label class="form-check-label" for="flexCheckDefault">
-                                                <%=ans%>
-                                            </label>
+                                            <input type="radio" name="ans<%=i%>" value="1" >  <%=q.getOption1()%><br/>
+                                            <input type="radio" name="ans<%=i%>" value="2" >  <%=q.getOption2()%><br/>
+                                            <input type="radio" name="ans<%=i%>" value="3" >  <%=q.getOption3()%><br/>
+                                            <input type="radio" name="ans<%=i%>" value="4" >  <%=q.getOption4()%><br/>
                                         </div>
-                                        <% } %>
                                     </ul>
                                     <hr>
-                                    <div class="row">
-                                        <input class="btn btn-success col-3" type="submit" value="Finish"> 
-                                        <div class="col-6"></div>
-                                        <button class="btn btn-outline-primary col-3 float-right" id="next" type="button" onclick="nextQuestion()">Next</button>
-                                    </div>
                                 </div>
                             </div>
                         </div>
                         <% }%>
+                        <div class="row">
+                            <button class="btn btn-outline-primary col-3 float-left" id="finish" type="submit" onclick="return confirm('Are you sure to Finish ?');">Finish</button>
+                            <div class="col-6"></div>
+                            <button class="btn btn-outline-primary col-3 float-right" id="next" type="button" onclick="nextQuestion()">Next</button>
+                        </div>
                     </form>
-                </c:if>
-                <c:if test="${empty listQuestion}">
-                    <h3>No quiz found</h3>            
-                </c:if>
-            </div>
-            <script>
-                setNumOfQuiz(<%=questions.size()%>);
-                quizStart();
-            </script>
+                </div>
+            </c:if>
+            <c:if test="${empty listQuestion}">
+                <h3>No quiz found</h3>            
+            </c:if>
         </div>
-    </body>
+        <script>
+            setNumOfQuiz(<%=questions.size()%>);
+            quizStart();
+        </script>
+    </div>
+</body>
 </html>

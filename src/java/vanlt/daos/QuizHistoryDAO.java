@@ -35,14 +35,15 @@ public class QuizHistoryDAO {
         }
     }
 
-    public void addEntry(int id, int numOfQuiz, int correctAnswer, Date dateQuiz) throws Exception {
+    public void addEntry(int studentId, int numOfQuiz, int correctAnswer, Date dateQuiz, int subjectID) throws Exception {
         try {
             conn = MyConnection.getMyConnection();
-            preStm = conn.prepareStatement("insert into QuizHistory (studentId, numOfQuiz, correctAnswer, dateQuiz) values (?,?,?,?)");
-            preStm.setInt(1, id);
+            preStm = conn.prepareStatement("insert into QuizHistory (studentId, numOfQuiz, correctAnswer, dateQuiz, subjectid) values (?,?,?,?,?)");
+            preStm.setInt(1, studentId);
             preStm.setInt(2, numOfQuiz);
             preStm.setInt(3, correctAnswer);
             preStm.setDate(4, dateQuiz);
+            preStm.setInt(5, subjectID);
             preStm.execute();
         } catch (Exception ex) {
             throw ex;
@@ -58,7 +59,12 @@ public class QuizHistoryDAO {
             preStm = conn.prepareStatement("Select QuizHistory.*, Users.username from QuizHistory inner join Users on QuizHistory.studentId = Users.id");
             rs = preStm.executeQuery();
             while (rs.next()) {
-                history.add(new QuizHistoryDto(rs.getInt("id"), rs.getString("username"), rs.getInt("numOfQuiz"), rs.getInt("correctAnswer"), rs.getDate("dateQuiz")));
+                int id = rs.getInt("id");
+                String username = rs.getString("username");
+                int quizNum = rs.getInt("numOfQuiz");
+                int correctAns = rs.getInt("correctAnswer");
+                Date date = rs.getDate("dateQuiz");
+                history.add(new QuizHistoryDto(id, username, quizNum, correctAns, date));
             }
         } catch (Exception ex) {
             throw ex;
@@ -75,7 +81,12 @@ public class QuizHistoryDAO {
             preStm.setInt(1, userID);
             rs = preStm.executeQuery();
             while (rs.next()) {
-                history.add(new QuizHistoryDto(rs.getInt("id"), rs.getString("username"), rs.getInt("numOfQuiz"), rs.getInt("correctAnswer"),rs.getDate("dateQuiz")));
+                int id = rs.getInt("id");
+                String username = rs.getString("username");
+                int quizNum = rs.getInt("numOfQuiz");
+                int correctAns = rs.getInt("correctAnswer");
+                Date date = rs.getDate("dateQuiz");
+                history.add(new QuizHistoryDto(id, username, quizNum, correctAns, date));
             }
         } catch (Exception ex) {
             throw ex;
@@ -84,4 +95,5 @@ public class QuizHistoryDAO {
         }
         return history;
     }
+    
 }

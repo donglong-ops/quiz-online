@@ -41,7 +41,7 @@
                 <button>Search</button>
             </Form>
             <c:if test="${not empty history }">
-                <table class="tableHis"style="margin-left: 3%">
+                <table class="tableHis"style="margin-left: 10%">
                     <h3>Quiz history<br></h3>
                     <thead>
                         <tr>
@@ -49,8 +49,7 @@
                             <th>Total Question</th>
                             <th>Correct Question</th>
                             <th>Mark</th>
-                            <th>Status</th>
-                            <th>Action</th>
+                            <th>Status Quiz</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -62,7 +61,6 @@
                                 <td>${hisDto.correctAnswer}</td>
                                 <td>${mark}</td>
                                 <td>${hisDto.getStatusQuiz(mark)}</td>
-                                <td><a href="">View</a></td>
                             </tr>
                         </c:forEach>
                     </tbody>

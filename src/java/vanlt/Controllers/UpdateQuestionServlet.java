@@ -43,11 +43,7 @@ public class UpdateQuestionServlet extends HttpServlet {
         String opt3 = request.getParameter("opt3");
         String opt4 = request.getParameter("opt4");
         String answer = request.getParameter("ans");
-        QuestionDto dto = new QuestionDto(Integer.parseInt(quesID), content, answer);   
-        dto.addOption(opt1);
-        dto.addOption(opt2);
-        dto.addOption(opt3);
-        dto.addOption(opt4);
+        QuestionDto dto = new QuestionDto(Integer.parseInt(quesID), content, opt1, opt2, opt3, opt4, answer);
         QuestionDAO dao = new QuestionDAO();
         try {
             boolean result = dao.updateQuestion(dto);

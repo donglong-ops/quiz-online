@@ -5,6 +5,7 @@ import java.sql.Date;
 import java.text.DecimalFormat;
 import java.text.NumberFormat;
 
+
 /**
  *
  * @author AVITA
@@ -16,6 +17,8 @@ public class QuizHistoryDto implements Serializable{
     private int numOfQuiz;
     private int correctAnswer;
     private Date dateQuiz;
+    
+    
 
     public QuizHistoryDto(int id, String studentName, int numOfQuiz, int correctAnswer) {
         this.id = id;
@@ -90,4 +93,8 @@ public class QuizHistoryDto implements Serializable{
         }
         return status;
     }
+    
+//    public int calculateResult(QuestionDto ques){
+//		int 
+//	}
 }

@@ -2,14 +2,6 @@
 <project-private xmlns="http://www.netbeans.org/ns/project-private/1">
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
-        <group>
-            <file>file:/C:/Users/Long/Desktop/LAB231/Lab2_QuizOnline/web/editQuiz.jsp</file>
-            <file>file:/C:/Users/Long/Desktop/LAB231/Lab2_QuizOnline/web/navbar.jsp</file>
-            <file>file:/C:/Users/Long/Desktop/LAB231/Lab2_QuizOnline/src/java/vanlt/Controllers/ManagerQuizServlet.java</file>
-            <file>file:/C:/Users/Long/Desktop/LAB231/Lab2_QuizOnline/src/java/vanlt/Controllers/MakeQuestionServlet.java</file>
-            <file>file:/C:/Users/Long/Desktop/LAB231/Lab2_QuizOnline/src/java/vanlt/daos/UserDAO.java</file>
-            <file>file:/C:/Users/Long/Desktop/LAB231/Lab2_QuizOnline/src/java/vanlt/Controllers/UpdateQuestionServlet.java</file>
-            <file>file:/C:/Users/Long/Desktop/LAB231/Lab2_QuizOnline/src/java/vanlt/daos/QuestionDAO.java</file>
-        </group>
+        <group/>
     </open-files>
 </project-private>

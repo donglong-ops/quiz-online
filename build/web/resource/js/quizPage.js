@@ -7,13 +7,14 @@ this.testing = 0;
 this.numOfQuiz = 0;
 
 var nextQuestion = function () {
-    currentQuiz = (currentQuiz + 1) % numOfQuiz;
+    currentQuiz = currentQuiz % numOfQuiz;
     if (this.currentDiv !== null) {
         this.currentDiv.classList.add("hidden");
     }
     currentDiv = document.getElementById("q" + currentQuiz);
     currentDiv.classList.remove("hidden");
     questionPos.textContent = "Question: " + (currentQuiz + 1) + "/" + numOfQuiz;
+    this.currentQuiz++;
 }
 
 var quizStart = function () {
@@ -37,7 +38,7 @@ var updateTime = function () {
 
 window.onbeforeunload = function () {
     if (testing !== 0)
-        return "Are you sure?";
+        return "Are you sure want to finish?";
 }
 
 var setNumOfQuiz = function (n) {

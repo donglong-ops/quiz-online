@@ -105,11 +105,7 @@ public class FilterDispatcher implements Filter {
         HttpServletRequest req = (HttpServletRequest) request;
         HttpServletResponse res = (HttpServletResponse) response;
         try {
-            HttpSession session = req.getSession();
-//            if(session.getAttribute("USER") == null){
-//                res.sendRedirect("try");
-//                return;
-//            }
+            HttpSession session = req.getSession(false);
             
             String uri = req.getRequestURI();
             int lastIndex = uri.lastIndexOf("/");
@@ -117,11 +113,14 @@ public class FilterDispatcher implements Filter {
             ResourceBundle bundle = ResourceBundle.getBundle("vanlt.filter.lable");
             String resource;
             String action = req.getServletPath();
-            if (lable.contains(".JPG") || lable.contains(".gif") || lable.contains(".jpg") || lable.contains(".png") || action.startsWith("/resource")) {
+            if (action.startsWith("/resource")) {
                 chain.doFilter(request, response);
-            } else if (bundle != null) {
+            }else if (bundle != null) {
                 try {
                     resource = bundle.getString(lable);
+                    if(session == null){
+                        resource = "login.jsp";
+                    }
                 } catch (Exception e) {
                     resource = "login.jsp";
                 }

@@ -13,23 +13,17 @@
         <link rel="stylesheet" href="resource/css/quizPage.css">
         <link rel="stylesheet" href="resource/css/index.css" >
         <link rel="stylesheet" href="resource/css/common.css">
-        <title>JSP Page</title>
+        <title>Result Quiz Page</title>
     </head>
     <body>
         <div id="main-panel">
             <jsp:include page="navbar.jsp" />   
-            <p>Your score: 
-                <span class="bold ${requestScope.className}">
-                    ${requestScope.result} ${requestScope.percent} - ${requestScope.status}
-                </span>
-            </p>
-            <form action="takeQuiz" method="post">
-                <label> Choose Subject : 
-                <select name="subId">
-                    <option value="1">PRJ311 </option>
-                    <option value="2">PRJ213</option>
-                </select> 
-                <input type="submit" value="Start Now">
+            <form action="quizPrepare" method="post">
+                    <div class="row justify-content-center">
+                        No.Correct Answer: ${requestScope.correctAnswer} / ${requestScope.numOfQuiz}</br>
+                        Point: ${requestScope.result}
+                    </div>
+                <input type="submit" value="Take Another Quiz">
             </form>
         </div>
     </body>

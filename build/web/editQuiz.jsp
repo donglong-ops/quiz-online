@@ -23,7 +23,6 @@
                 <span class="failed">${requestScope.UPDATEFAIL}</span>
             </c:if>
             <c:set var="quesDto" value="${requestScope.DTO}"/>
-            <c:set var="opt" value="${quesDto.option}"/>
             <form action="updateQuestion" method="post" class="form-action" >
                 <input type="hidden" name="questionID" value="${quesDto.id}" />
                 <table>
@@ -34,19 +33,19 @@
                         </tr>
                         <tr>
                             <td>Option 1</td>
-                            <td><textarea name="opt1" required>${opt[0]}</textarea></td>
+                            <td><textarea name="opt1" required>${quesDto.option1}</textarea></td>
                         </tr>
                         <tr>
                             <td>Option 2</td>
-                            <td><textarea name="opt2" required>${opt[1]}</textarea></td>
+                            <td><textarea name="opt2" required>${quesDto.option2}</textarea></td>
                         </tr>
                         <tr>
                             <td>Option 3</td>
-                            <td><textarea name="opt3" required >${opt[2]}</textarea></td>
+                            <td><textarea name="opt3" required >${quesDto.option3}</textarea></td>
                         </tr>
                         <tr>
                             <td>Option 4</td>
-                            <td><textarea name="opt4" required>${opt[3]}</textarea></td>
+                            <td><textarea name="opt4" required>${quesDto.option4}</textarea></td>
                         </tr>
                         <tr>
                             <td>Answer(s)</td>

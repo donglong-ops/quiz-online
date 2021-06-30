@@ -22,7 +22,7 @@
                 <label> Choose Subject : 
                 <select name="subId">
                     <option value="1">PRJ311 </option>
-                    <option value="2">PRJ213</option>
+                    <option value="2">PRJ321</option>
                 </select> 
                 <input type="submit" value="Start Now">
             </form>

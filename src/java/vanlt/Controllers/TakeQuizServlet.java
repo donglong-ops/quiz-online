@@ -16,8 +16,10 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 import vanlt.daos.QuestionDAO;
 import vanlt.dtos.QuestionDto;
+import vanlt.dtos.UserDto;
 
 /**
  *
@@ -43,6 +45,7 @@ public class TakeQuizServlet extends HttpServlet {
         PrintWriter out = response.getWriter();
         QuestionDAO dao = new QuestionDAO();
         String subId = request.getParameter("subId");
+        HttpSession session = request.getSession();
         int subjectId = Integer.parseInt(subId);
         try {
             List<QuestionDto> questions = dao.getQuestions(subjectId);
@@ -57,12 +60,12 @@ public class TakeQuizServlet extends HttpServlet {
                 for (int i = 0; i < numOfQuiz; i++) {
                     listQuest.add(questions.get(i));
                 }
-                request.setAttribute("quizData", listQuest);
+                session.setAttribute("quizData", listQuest);
+                session.setAttribute("subjectID", subjectId);
             }
         } catch (Exception ex) {
             ex.printStackTrace();
         } finally {
-            //request.getRequestDispatcher("quizPage.jsp").forward(request, response);
             request.getRequestDispatcher("quizPage_test.jsp").forward(request, response);
             out.close();
         }

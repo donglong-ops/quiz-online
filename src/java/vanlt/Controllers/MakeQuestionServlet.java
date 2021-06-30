@@ -48,11 +48,7 @@ public class MakeQuestionServlet extends HttpServlet {
         String answer = request.getParameter("ans");
         String subId = request.getParameter("subId");
         int subjectId = Integer.parseInt(subId);
-        QuestionDto q = new QuestionDto(1, content, answer, created, subjectId);
-        q.addOption(opt1);
-        q.addOption(opt2);
-        q.addOption(opt3);
-        q.addOption(opt4);
+        QuestionDto q = new QuestionDto(1222222, content, opt1, opt2, opt3, opt4, answer, created, subjectId);
 
         try {
             QuestionDAO dao = new QuestionDAO();

@@ -1,14 +1,17 @@
 package vanlt.daos;
 
 import java.sql.Connection;
+import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
 import java.sql.SQLException;
+import javax.naming.NamingException;
 import vanlt.conn.MyConnection;
 import vanlt.dtos.QuestionDto;
+import vanlt.dtos.QuizHistoryDto;
 
 /**
  *
@@ -52,11 +55,17 @@ public class QuestionDAO {
 
             questions = new ArrayList<>();
             while (rs.next()) {
-                QuestionDto q = new QuestionDto(rs.getInt("id"), rs.getNString("content"), rs.getNString("answer"), rs.getDate("created"), rs.getInt("subjectId"));
-                q.addOption(rs.getNString("opt1"));
-                q.addOption(rs.getNString("opt2"));
-                q.addOption(rs.getNString("opt3"));
-                q.addOption(rs.getNString("opt4"));
+                int id = rs.getInt("id");
+                String content = rs.getNString("content");
+                String opt1 = rs.getNString("opt1");               
+                String opt2 = rs.getNString("opt2");
+                String opt3 = rs.getNString("opt3");
+                String opt4 = rs.getNString("opt4");
+                String ans = rs.getNString("answer");
+                Date date = rs.getDate("created");
+                int subId = rs.getInt("subjectId");
+                QuestionDto q = new QuestionDto(id, content, opt1, opt2, opt3, opt4, ans, date, subId);
+
                 questions.add(q);
             }
         } catch (Exception ex) {
@@ -76,11 +85,16 @@ public class QuestionDAO {
             rs = preStm.executeQuery();
             questions = new ArrayList<>();
             while (rs.next()) {
-                QuestionDto q = new QuestionDto(rs.getInt("id"), rs.getNString("content"), rs.getNString("answer"), rs.getDate("created"), rs.getInt("subjectId"));
-                q.addOption(rs.getNString("opt1"));
-                q.addOption(rs.getNString("opt2"));
-                q.addOption(rs.getNString("opt3"));
-                q.addOption(rs.getNString("opt4"));
+                int id = rs.getInt("id");
+                String content = rs.getNString("content");
+                String opt1 = rs.getNString("opt1");               
+                String opt2 = rs.getNString("opt2");
+                String opt3 = rs.getNString("opt3");
+                String opt4 = rs.getNString("opt4");
+                String ans = rs.getNString("answer");
+                Date date = rs.getDate("created");
+                QuestionDto q = new QuestionDto(id, content, opt1, opt2, opt3, opt4, ans, date, subjectId);
+
                 questions.add(q);
             }
         } catch (Exception ex) {
@@ -123,11 +137,15 @@ public class QuestionDAO {
             rs = preStm.executeQuery();
 
             while (rs.next()) {
-                QuestionDto q = new QuestionDto(rs.getInt("id"), rs.getNString("content"), rs.getNString("answer"), rs.getDate("created"), rs.getInt("subjectId"));
-                q.addOption(rs.getNString("opt1"));
-                q.addOption(rs.getNString("opt2"));
-                q.addOption(rs.getNString("opt3"));
-                q.addOption(rs.getNString("opt4"));
+                int id = rs.getInt("id");
+                String content = rs.getNString("content");
+                String opt1 = rs.getNString("opt1");               
+                String opt2 = rs.getNString("opt2");
+                String opt3 = rs.getNString("opt3");
+                String opt4 = rs.getNString("opt4");
+                String ans = rs.getNString("answer");
+                Date date = rs.getDate("created");
+                QuestionDto q = new QuestionDto(id, content, opt1, opt2, opt3, opt4, ans, date, subjectId);
                 questions.add(q);
             }
         } catch (Exception ex) {
@@ -178,10 +196,10 @@ public class QuestionDAO {
             String query = "insert into Question (content, opt1, opt2, opt3, opt4, created,  answer, status, subjectId) values(?,?,?,?,?,?,?,?,?)";
             preStm = conn.prepareStatement(query);
             preStm.setString(1, q.getContent());
-            preStm.setString(2, q.getOption().get(0));
-            preStm.setString(3, q.getOption().get(1));
-            preStm.setString(4, q.getOption().get(2));
-            preStm.setString(5, q.getOption().get(3));
+            preStm.setString(2, q.getOption1());
+            preStm.setString(3, q.getOption2());
+            preStm.setString(4, q.getOption3());
+            preStm.setString(5, q.getOption4());
             preStm.setDate(6, q.getCreated());
             preStm.setString(7, q.getAnswer());
             preStm.setString(8, "Active");
@@ -201,10 +219,10 @@ public class QuestionDAO {
                     + " answer =? where id = ?";
             preStm = conn.prepareStatement(query);
             preStm.setString(1, q.getContent());
-            preStm.setString(2, q.getOption().get(0));
-            preStm.setString(3, q.getOption().get(1));
-            preStm.setString(4, q.getOption().get(2));
-            preStm.setString(5, q.getOption().get(3));
+            preStm.setString(2, q.getOption1());
+            preStm.setString(3, q.getOption2());
+            preStm.setString(4, q.getOption3());
+            preStm.setString(5, q.getOption4());
             preStm.setString(6, q.getAnswer());
             preStm.setInt(7, q.getId());
             result = preStm.executeUpdate() > 0;
@@ -232,42 +250,46 @@ public class QuestionDAO {
     }
 
     public QuestionDto findQuestionById(int id) throws Exception {
-        QuestionDto returnValue = null;
+        QuestionDto dto = null;
         try {
             conn = MyConnection.getMyConnection();
             preStm = conn.prepareStatement("SELECT * FROM Question WHERE id=?");
             preStm.setInt(1, id);
             rs = preStm.executeQuery();
             while (rs.next()) {
-                returnValue = new QuestionDto(rs.getInt("id"), rs.getNString("content"), rs.getNString("answer"), rs.getDate("created"), rs.getInt("subjectId"));
-                returnValue.addOption(rs.getNString("opt1"));
-                returnValue.addOption(rs.getNString("opt2"));
-                returnValue.addOption(rs.getNString("opt3"));
-                returnValue.addOption(rs.getNString("opt4"));
+                //int quesId = rs.getInt("id");
+                String content = rs.getNString("content");               
+                String opt1 = rs.getNString("opt1");               
+                String opt2 = rs.getNString("opt2");
+                String opt3 = rs.getNString("opt3");
+                String opt4 = rs.getNString("opt4");
+                String ans = rs.getNString("answer");
+    
+                dto = new QuestionDto(id, content, opt1, opt2, opt3, opt4, ans);             
             }
         } catch (Exception ex) {
             throw ex;
         } finally {
             closeConnection();
         }
-        return returnValue;
+        return dto;
     }
 
     public int getQuestionSize() throws Exception {
-        int returnValue = 0;
+        int size = 0;
         try {
             conn = MyConnection.getMyConnection();
             preStm = conn.prepareStatement("SELECT COUNT(id) as SizeQuestion FROM Question where status = 'Active'");
             rs = preStm.executeQuery();
             if (rs.next()) {
-                returnValue = rs.getInt("SizeQuestion");
+                size = rs.getInt("SizeQuestion");
             }
         } catch (Exception ex) {
             throw ex;
         } finally {
             closeConnection();
         }
-        return returnValue;
+        return size;
     }
 
 }

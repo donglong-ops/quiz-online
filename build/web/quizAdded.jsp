@@ -18,7 +18,7 @@
         <div id="main-panel">
             <jsp:include page="navbar.jsp" />   
             <h2>Question added successfully</h2>
-            <a href="quizPrepare">Add another question</a>
+            <a href="makeQuestionPage">Add another question</a>
         </div>
     </body>
 </html>
